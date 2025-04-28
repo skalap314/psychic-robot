@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,9 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .header {
             text-align: center;
@@ -27,6 +30,7 @@
             background-color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             overflow-x: auto;
+            flex-grow: 1;
         }
         .schedule th, .schedule td {
             border: 1px solid #ddd;
@@ -71,12 +75,38 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .clock-container {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+        .clock {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .date {
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
         @media (max-width: 600px) {
             .schedule {
                 font-size: 14px;
             }
             .schedule th, .schedule td {
                 padding: 8px;
+            }
+            .clock {
+                font-size: 1.8em;
+            }
+            .date {
+                font-size: 1em;
             }
         }
     </style>
@@ -183,6 +213,11 @@
         </tbody>
     </table>
 
+    <div class="clock-container">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="date" id="date">1 января 2023, воскресенье</div>
+    </div>
+
     <script>
         // Подсветка текущего дня
         const today = new Date().getDay();
@@ -223,6 +258,31 @@
 
         updateCurrentLesson();
         setInterval(updateCurrentLesson, 60000);
+
+        // Часы и дата
+        function updateClock() {
+            const now = new Date();
+            const clock = document.getElementById('clock');
+            const date = document.getElementById('date');
+            
+            // Форматирование времени
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+            
+            // Форматирование даты
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            date.textContent = now.toLocaleDateString('ru-RU', options);
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
 
         // PWA Установка
         let deferredPrompt;

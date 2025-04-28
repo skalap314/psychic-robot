@@ -185,10 +185,10 @@
 
     <script>
         // Подсветка текущего дня
-        const today = new Date().getDay(); // 0-воскресенье, 1-понедельник...
+        const today = new Date().getDay();
         const dayHeaders = document.querySelectorAll('th.day');
         
-        if (today >= 1 && today <= 5) { // Только школьные дни (Пн-Пт)
+        if (today >= 1 && today <= 5) {
             dayHeaders[today - 1].classList.add('today');
         }
 
@@ -212,10 +212,9 @@
                     const timeLeft = end - currentTime;
                     cell.innerHTML = `${cell.textContent}<br><small>Идёт урок (осталось ${timeLeft} мин)</small>`;
                     
-                    // Подсветка текущего предмета
                     if (today >= 1 && today <= 5) {
                         const row = cell.parentElement;
-                        const subjectCell = row.children[today + 1]; // +1 потому что первые 2 ячейки - № и время
+                        const subjectCell = row.children[today + 1];
                         subjectCell.classList.add('current-lesson');
                     }
                 }
@@ -223,7 +222,7 @@
         }
 
         updateCurrentLesson();
-        setInterval(updateCurrentLesson, 60000); // Обновлять каждую минуту
+        setInterval(updateCurrentLesson, 60000);
 
         // PWA Установка
         let deferredPrompt;
@@ -245,10 +244,9 @@
             });
         });
 
-        // Проверка, установлено ли уже приложение
         window.addEventListener('appinstalled', () => {
             installBtn.style.display = 'none';
         });
     </script>
 </body>
-</html>
+</html>"lesson-time">13
